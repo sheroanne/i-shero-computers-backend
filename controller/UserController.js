@@ -50,17 +50,18 @@ export function loginUser(req, res) {
                         Image: user.Image
                     };
 
-                    const token = jwt.sign(payload, "annesecretKey962025", {
+                    const token = jwt.sign(payload, process.env.JWT_SECRET, {
                         expiresIn: "150h"
                     })
 
 
                     res.json({
                         message: "Login successful",
-                        token: token
+                        token: token,
+                        role:user.role
                     })
                 } else {
-                    res.json({
+                    res.status(401).json({
                         message: "Invalid password"
                     })
                     // User.updateOne({ email: email }, {

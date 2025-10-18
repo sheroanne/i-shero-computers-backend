@@ -4,8 +4,12 @@ import mongoose from "mongoose"
 import userRouter from "./Route/UserRouter.js";
 import jwt from "jsonwebtoken"
 import ProductRouter from "./Route/ProductRouter.js";
+import cors from "cors"
+import dotenv from "dotenv"
 
-const mongoURI = "mongodb+srv://sheroanne18:ozIxFlQTEaehjNfq@test.g3yf0fv.mongodb.net/?retryWrites=true&w=majority&appName=Test";
+dotenv.config()
+
+const mongoURI = process.env.MONGO_URI
 
 mongoose.connect(mongoURI).then(
     () => {
@@ -14,6 +18,8 @@ mongoose.connect(mongoURI).then(
 )
 
 const app = express()
+
+app.use(cors())
 
 app.use(express.json());
 
@@ -27,7 +33,7 @@ app.use(
 
             // console.log(token);
 
-            jwt.verify(token, "annesecretKey962025",
+            jwt.verify(token, process.env.JWT_SECRET,
                 (error, content) => {
                     if (content == null) {
                         console.log("Invalid token");
@@ -49,8 +55,8 @@ app.use(
     }
 )
 
-app.use("/users", userRouter)
-app.use("/products", ProductRouter)
+app.use("/api/users", userRouter)
+app.use("/api/products", ProductRouter)
 
 app.listen(5000,
     () => { console.log("server is running") }
