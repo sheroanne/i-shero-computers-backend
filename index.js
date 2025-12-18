@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken"
 import ProductRouter from "./Route/ProductRouter.js";
 import cors from "cors"
 import dotenv from "dotenv"
+import orderRouter from "./Route/OrderRouter.js";
 
 dotenv.config()
 
@@ -31,7 +32,7 @@ app.use(
         if (authorizationHeader != null) {
             const token = authorizationHeader.replace("Bearer ", "");
 
-            // console.log(token);
+            console.log(token)
 
             jwt.verify(token, process.env.JWT_SECRET,
                 (error, content) => {
@@ -57,6 +58,8 @@ app.use(
 
 app.use("/api/users", userRouter)
 app.use("/api/products", ProductRouter)
+app.use("/api/orders",orderRouter)
+
 
 app.listen(5000,
     () => { console.log("server is running") }

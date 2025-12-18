@@ -23,18 +23,18 @@ const userschema = new mongoose.Schema(
             type: String,
             default: "customer"
         },
-        isblocked: {
+        isBlocked: {
             type: Boolean,
             default: false,
         },
-        isemailverified: {
-            type: Boolean,
-            default: false
+        isEmailVerified:{
+            type : Boolean,
+            default : false
         },
-        Image: {
-            type: String,
-            required: true,
-            default: "default.jpg"
+        image : {
+            type : String,
+            required : true,
+            default : "/default.jpg"
         }
 
         // invalidTries: {
