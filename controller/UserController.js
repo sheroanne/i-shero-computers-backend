@@ -141,6 +141,8 @@ export async function googleLogin(req, res) {
 				image: newUser.image,
 			};
 
+			console.log("payload",payload);
+
 			const token = jwt.sign(payload, process.env.JWT_SECRET, {
 				expiresIn: "150h",
 			});
@@ -148,7 +150,7 @@ export async function googleLogin(req, res) {
 			res.json({
 				message: "Login successful",
 				token: token,
-				role: user.role,
+				role: newUser.role,
 			});
 		} else {
 			if (user.isBlocked) {
@@ -171,11 +173,16 @@ export async function googleLogin(req, res) {
 				expiresIn: "150h",
 			});
 
+			console.log("user",user)
+
 			res.json({
 				message: "Login successful",
 				token: token,
 				role: user.role,
 			});
+
+			//res.json(response.data);
+			console.log("existing user",res);
 		}
 	} catch (error) {
 		res.status(500).json({
